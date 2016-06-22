@@ -1,0 +1,12 @@
+<!doctype html>
+<title>Showlog</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+<div class="page">
+  <h1>Git Log</h1>
+
+  <ul>
+  {% for entry in logdata %}
+  <li><h2>{{ entry.abbreviated_commit}} - {{ entry.author.date }}</h2> {{ entry.subject|safe }}</li>
+  {% endfor %}
+</ul>
+</div>
