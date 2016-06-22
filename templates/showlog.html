@@ -6,7 +6,9 @@
 
   <ul>
   {% for entry in logdata %}
-  <li><h2>{{ entry.abbreviated_commit}} - {{ entry.author.date }}</h2> {{ entry.subject|safe }}</li>
+  <li><h2>{{ entry.abbreviated_commit}} - {{ entry.author.date }}</h2> {{ entry.subject|safe }}<br>
+  <pre>  {{ entry.patch }} </pre>
+  </li>
   {% endfor %}
 </ul>
 </div>

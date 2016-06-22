@@ -3,6 +3,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 import subprocess
 import json
+from unidiff import PatchSet
 
 app = Flask(__name__)
 
@@ -15,8 +16,17 @@ def showlog():
     output = subprocess.Popen(["git log --pretty=format:" + format], shell=True, stdout=subprocess.PIPE).communicate()[0]
     #return output
     output = '['+ output[:-1]+']'
-    print output
+    #print output
     logdata = json.loads(output)
+
+
+    for commit in logdata:
+        pathout = subprocess.Popen(["git diff " + commit['abbreviated_commit']], shell=True, stdout=subprocess.PIPE).communicate()[0]
+        print pathout
+        patch = PatchSet(pathout, encoding='utf-8')
+        commit['patch'] = pathout
+        #print patch[0]
+
     return render_template('showlog.html', logdata=logdata)
 
 if __name__ == "__main__":
